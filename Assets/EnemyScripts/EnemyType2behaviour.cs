@@ -9,12 +9,18 @@ public class EnemyType2behaviour : MonoBehaviour
     public GameObject player;
     public Transform playerPos;
 
+    public float playerHealth;
+
     public Animator animator;
 
     float movementAbsolute = 0;
 
+    public float attackTime = 1;
+    public float timer = 0;
+
     public Rigidbody2D rb;
     public float speed = 1;
+    public float damage = 10;
 
         // Vores ondeath event (handler)
     public delegate void DeathHandler();
@@ -23,6 +29,8 @@ public class EnemyType2behaviour : MonoBehaviour
     {
         player = GameObject.Find("Main_Player");
         playerPos = player.GetComponent<Transform>();
+
+        playerHealth = GetComponent<Player>().health;
 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
@@ -52,13 +60,28 @@ public class EnemyType2behaviour : MonoBehaviour
 
         animator.SetFloat("speed", movementAbsolute);
 
+        if(movementAbsolute == 0){
+            timer += Time.deltaTime;
+
+            Attack();
+        } else {
+            timer = 0;
+        }
+
     }
 
 
-            public void Die() // caller den her method når enemy er død
+    public void Die() // caller den her method når enemy er død
     {
-        
         OnDeath?.Invoke();
         Destroy(gameObject);
+    }
+
+    public void Attack(){
+        if(timer >= attackTime){
+            Debug.Log("attackSuccessful");
+            playerHealth -= damage; //make this shit
+            timer = 0;
+        }
     }
 }
