@@ -39,8 +39,6 @@ public class EnemyType2behaviour : MonoBehaviour
     void FixedUpdate()
     {
 
-        
-
 
 
         if(Vector3.Distance(playerPos.position, transform.position) > 2){
