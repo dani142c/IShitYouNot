@@ -799,7 +799,7 @@ MonoBehaviour:
   - {fileID: 1897675780}
   - {fileID: 1239437917}
   waveNumberText: {fileID: 0}
-  countdownText: {fileID: 0}
+  countdownText: {fileID: 340501245}
   startWaveButton: {fileID: 1228533631}
   menuCanvas: {fileID: 941499413}
 --- !u!4 &361865767
@@ -2889,7 +2889,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a18962e6c48e01540a73f7ffe531d2d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e345f2ba85947dc419781b8bf09fc26a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2963,7 +2963,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.37, y: 2.07}
+    oldSize: {x: 5, y: 5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class WaveManager : MonoBehaviour
     public GameObject enemyPrefab2;         
     public Transform[] spawnPoints;         
     public Text waveNumberText;             
-    public Text countdownText;              
+    public TextMeshProUGUI countdownText;
     public Button startWaveButton;          
 
     private int enemiesRemaining;           
@@ -45,18 +46,32 @@ public class WaveManager : MonoBehaviour
 
     void ShowStartWaveButton()
     {
-        menuCanvas.SetActive(true);
-        startWaveButton.gameObject.SetActive(true);
-        Text buttonText = startWaveButton.GetComponentInChildren<Text>();
-        if (buttonText != null)
+        menuCanvas.SetActive(true);  // Keep the menu visible
+        startWaveButton.gameObject.SetActive(true);  // Show the start wave button
+
+        // Try to get the TextMeshProUGUI component
+        TextMeshProUGUI buttonTextTMP = startWaveButton.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (buttonTextTMP != null)
         {
-            buttonText.text = "Start Next Wave";
+            buttonTextTMP.text = "Start Next Wave";  // Initially set it to "Start Next Wave"
         }
         else
         {
-            Debug.LogError("Start Wave Button Text is not set!");
+            Debug.LogError("TextMeshProUGUI component not found on the Start Wave button!");
         }
     }
+
+
+    void LogChildren(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            Debug.Log("Child: " + child.name);
+        }
+    }
+
+
 
 
     void OnStartWaveButtonPressed()
@@ -68,18 +83,36 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator ShowCountdownAndStartNextWave()
     {
-        for (int i = 5; i > 0; i--)
+        TextMeshProUGUI buttonTextTMP = startWaveButton.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (buttonTextTMP == null)
         {
-            if (countdownText != null)
-            {
-                countdownText.text = "Ny wave starter om: " + i + " sekunder";
-            }
-            yield return new WaitForSeconds(1f);
+            Debug.LogError("TextMeshProUGUI component not found for countdown text.");
+            yield break;
         }
 
-        countdownText.text = ""; 
-        StartWave(); 
+        // Keep the menu visible during the countdown
+        menuCanvas.SetActive(true);  
+        startWaveButton.gameObject.SetActive(true);  // Ensure button is visible for countdown
+
+        for (int i = 5; i > 0; i--)
+        {
+            buttonTextTMP.text = "Starter om: " + i + " sekunder";  // Update button text with countdown
+            Debug.Log(buttonTextTMP.text);  // Log the current countdown for debugging
+            yield return new WaitForSeconds(1f);  // Wait 1 second for each countdown step
+        }
+
+        // After countdown ends, reset the button text
+        buttonTextTMP.text = "Start Next Wave";
+
+        // Hide the button and menu
+        startWaveButton.gameObject.SetActive(false);
+        menuCanvas.SetActive(false);
+
+        StartWave();  // Start the next wave
     }
+
+    
 
     void StartWave()
     {
