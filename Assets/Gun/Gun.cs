@@ -49,6 +49,7 @@ public abstract class Gun : MonoBehaviour
 
     protected virtual void Start()
     {
+
         if (transform.parent != null)
         {
             gunPivot = transform.parent.Find("GunPivot")?.transform;

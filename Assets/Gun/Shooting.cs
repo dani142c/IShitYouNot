@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
+
+    public AudioClip shootSFX;
     public Transform gunPivot;
     public GameObject bulletPrefab;
 
@@ -14,6 +16,8 @@ public class Shooting : MonoBehaviour
     void Start()
     {
         player = GetComponent<Player>();
+
+        shootSFX = Resources.Load<AudioClip>("sfx/PlayerSFX/shoot");
     }
 
     // Update is called once per frame
@@ -21,6 +25,10 @@ public class Shooting : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // "Fire1" should be replaced with 0 to indicate the left mouse button
         {
+            if(player.equippedGun.currentAmmo > 0){
+                SoundManager.instance.playSound(shootSFX, player.transform, 1f);
+            }
+
             player.equippedGun.Shoot();
         }
     }    
