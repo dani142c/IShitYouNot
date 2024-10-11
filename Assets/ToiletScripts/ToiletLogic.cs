@@ -2,20 +2,15 @@ using UnityEngine;
 
 public class ToiletLogic : MonoBehaviour
 {
+    public Canvas gameOver;  
     void OnTriggerEnter2D(Collider2D collision)
     {
         // VI checker om vores colliding object er tagget som "Enemy"
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            GameOver();
+            WaveManager.IsGamePaused = true;
+            Time.timeScale = 0;
+            gameOver.gameObject.SetActive(true);
         }
-    }
-
-    // Vores function til at stoppe spillet
-    void GameOver()
-    {
-        Debug.Log("Enemy touched the toilet. Game Over!");
-        // Stopper spillet
-        Time.timeScale = 0;
     }
 }
