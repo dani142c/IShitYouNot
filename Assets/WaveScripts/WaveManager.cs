@@ -210,6 +210,8 @@ public class WaveManager : MonoBehaviour
         if (enemiesRemaining <= 0) // No more enemies
         {
             isWaveInProgress = false; // Wave has ended
+
+            Player.instance.points += 2;
             
             ShowStartWaveButton(); // Show button to start the next wave
         }

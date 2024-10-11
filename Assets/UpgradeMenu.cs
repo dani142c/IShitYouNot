@@ -15,7 +15,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (Player.instance.points >= 1)
         {
-            Player.instance.PlayerUpgradeSpeed(0.15f);
+            Player.instance.PlayerUpgradeSpeed(Player.instance.speedX);
             Player.instance.points -= 1;
         }
         Debug.Log("Speed upgraded - points: " + Player.instance.points);

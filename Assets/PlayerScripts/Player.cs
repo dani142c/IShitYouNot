@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public Gun equippedGun;
 
     public AudioClip playerDeath;
+    public AudioClip playerReoad;
 
     // Upgrades - De er multipliers
     public int points = 5;
@@ -19,6 +20,11 @@ public class Player : MonoBehaviour
     public float health = 50f; 
     public TextMeshProUGUI healthText;
     public Canvas gameOver;
+
+    public bool isReloading = false;
+
+    public int speedX = 0;
+    
 
 
     // Start is called before the first frame update
@@ -29,25 +35,41 @@ public class Player : MonoBehaviour
     }
 
 
+ IEnumerator ReloadTimer(float time)
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(time);
+        equippedGun.Reload();
+        SoundManager.instance.playSound(playerReoad, Player.instance.transform, 1f);
+        isReloading = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
+
+
         
         if (Input.GetKeyDown(KeyCode.R))
         {
-            equippedGun.Reload();
+            if(!isReloading){
+                StartCoroutine(ReloadTimer(1.5f));
+            } else {
+                Debug.Log("already reloading");
+            }
         }
     }
 
-    public void PlayerUpgradeSpeed(float multiplier)
+    public void PlayerUpgradeSpeed(int x)
     {
-        this.speed += multiplier;
+        this.speed = (float)(0.5 * Math.Sqrt(x) + 1);
+        x++;
     }
 
     public void PlayerUpgradeDamage(float multiplier)
     {
         this.damage += multiplier;
-        this.equippedGun.gunDamage *= this.damage;
+        this.equippedGun.gunDamage = this.damage;
     }
 
     public void PlayerUpgradeHealth(float multiplier)

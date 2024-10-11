@@ -44,7 +44,5 @@ public class EnemyHealth : MonoBehaviour
         // logic for hvis vores enemy dør (might not need to be in this file)
         Debug.Log("Enemy died!");
         Destroy(gameObject);
-        Player.instance.points += 1;
-        Debug.LogAssertion("The player has gained 1 point!");
     }
 }
