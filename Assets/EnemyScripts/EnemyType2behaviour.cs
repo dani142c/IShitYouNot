@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyType2behaviour : MonoBehaviour
 {
 
-    public AudioClip damagePlayer;
+    public AudioClip[] damagePlayer;
     public GameObject player;
     public Transform playerPos;
 
@@ -32,7 +32,7 @@ public class EnemyType2behaviour : MonoBehaviour
         playerPos = player.GetComponent<Transform>();
 
 
-        damagePlayer = Resources.Load<AudioClip>("folder/CantinaBand3");
+        damagePlayer = Resources.LoadAll<AudioClip>("sfx/PlayerSFX/PlayerHurtSFX");
 
         Debug.Log("Failed to load audio clip!");
 
@@ -86,7 +86,7 @@ public class EnemyType2behaviour : MonoBehaviour
     public void Attack(){
         if(timer >= attackTime){
             Debug.Log("attackSuccessful");
-            SoundManager.instance.playSound(damagePlayer, transform, 1f);
+            SoundManager.instance.playRANDSound(damagePlayer, transform, 1f);
             playerHealth -= damage; //make this shit
             timer = 0;
         }
