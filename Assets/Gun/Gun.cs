@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public abstract class Gun : MonoBehaviour
 {
     public Transform gunPivot;
 
-    [SerializeField] private Text ammoDisplay;  // Make sure this shows in Inspector
+    [SerializeField] private TextMeshProUGUI ammoDisplay;  // Make sure this shows in Inspector
 
     public virtual GameObject bulletPrefab { get; set; } = null;
     public virtual float bulletForce { get; set; } = 20f;
