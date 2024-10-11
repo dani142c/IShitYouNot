@@ -1,7 +1,16 @@
 using UnityEngine;
+using UnityEditor;
 
 public class BulletCollision : MonoBehaviour
 {
+
+    public AudioClip[] damageEnemy1;
+    public AudioClip[] damageEnemy2;
+
+    public void Start(){
+        damageEnemy1 = Resources.LoadAll<AudioClip>("sfx/EnemyType1SFX/EnemyType1HurtSFX");
+        damageEnemy2 = Resources.LoadAll<AudioClip>("sfx/EnemyType2SFX/EnemyType2HurtSFX");
+    }
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Player player = Player.instance;
@@ -34,8 +43,17 @@ public class BulletCollision : MonoBehaviour
 
             EnemyOnHit HitResponseScript = collision.gameObject.GetComponent<EnemyOnHit>();
 
+            Transform enemyTransform = collision.gameObject.GetComponent<Transform>();
+
             if (enemyHealth != null)
             {
+                if(collision.gameObject.name == AssetDatabase.LoadAssetAtPath<GameObject>("Assets/EnemyType1.prefab").name + "(Clone)"){
+                    SoundManager.instance.playRANDSound(damageEnemy1, enemyTransform, 1f);
+                    Debug.Log("enemy2collision");
+                } else if(collision.gameObject.name == AssetDatabase.LoadAssetAtPath<GameObject>("Assets/EnemyType2.prefab").name + "(Clone)"){
+                    SoundManager.instance.playRANDSound(damageEnemy2, enemyTransform, 1f);
+                }
+
                 enemyHealth.TakeDamage(gunDamage);
                 HitResponseScript.HitResponse();
             }
