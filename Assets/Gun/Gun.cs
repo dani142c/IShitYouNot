@@ -21,6 +21,7 @@ public abstract class Gun : MonoBehaviour
 
     public virtual void Reload()
     {
+        
         currentAmmo = maxAmmo;
         UpdateAmmoDisplay();
     }

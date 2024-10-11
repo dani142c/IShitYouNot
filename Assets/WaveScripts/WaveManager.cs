@@ -20,6 +20,8 @@ public class WaveManager : MonoBehaviour
     private bool isWaveInProgress = false;  
 
     public GameObject menuCanvas;
+    public static bool IsGamePaused = false;  // Static variable to track game pause state
+
 
     void Start()
     {
@@ -46,6 +48,8 @@ public class WaveManager : MonoBehaviour
 
     void ShowStartWaveButton()
     {
+        Time.timeScale = 0;
+        IsGamePaused = true;
         menuCanvas.SetActive(true);  // Keep the menu visible
         startWaveButton.gameObject.SetActive(true);  // Show the start wave button
 
@@ -83,6 +87,10 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator ShowCountdownAndStartNextWave()
     {
+        // Pause the game and set pause state
+        Time.timeScale = 0;
+        IsGamePaused = true;  // Set game paused to true
+
         TextMeshProUGUI buttonTextTMP = startWaveButton.GetComponentInChildren<TextMeshProUGUI>();
 
         if (buttonTextTMP == null)
@@ -91,26 +99,26 @@ public class WaveManager : MonoBehaviour
             yield break;
         }
 
-        // Keep the menu visible during the countdown
-        menuCanvas.SetActive(true);  
-        startWaveButton.gameObject.SetActive(true);  // Ensure button is visible for countdown
+        menuCanvas.SetActive(true);
+        startWaveButton.gameObject.SetActive(true);
 
         for (int i = 5; i > 0; i--)
         {
-            buttonTextTMP.text = "Starter om: " + i + " sekunder";  // Update button text with countdown
-            Debug.Log(buttonTextTMP.text);  // Log the current countdown for debugging
-            yield return new WaitForSeconds(1f);  // Wait 1 second for each countdown step
+            buttonTextTMP.text = "Starting in: " + i + " seconds";
+            yield return new WaitForSecondsRealtime(1f);  // Real-time countdown
         }
 
-        // After countdown ends, reset the button text
-        buttonTextTMP.text = "Start Next Wave";
+        Time.timeScale = 1;
+        IsGamePaused = false;  // Set game paused to false, resuming inputs
 
-        // Hide the button and menu
+        buttonTextTMP.text = "Start Next Wave";
         startWaveButton.gameObject.SetActive(false);
         menuCanvas.SetActive(false);
 
-        StartWave();  // Start the next wave
+        StartWave();
     }
+
+
 
     
 
