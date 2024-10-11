@@ -31,9 +31,13 @@ public class BulletCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+
+            EnemyOnHit HitResponseScript = collision.gameObject.GetComponent<EnemyOnHit>();
+
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(gunDamage);
+                HitResponseScript.HitResponse();
             }
 
             Destroy(gameObject); // Destroy bullet after dealing damage

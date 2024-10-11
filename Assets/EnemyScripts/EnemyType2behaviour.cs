@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyType2behaviour : MonoBehaviour
 {
 
+    public AudioClip damagePlayer;
     public GameObject player;
     public Transform playerPos;
 
@@ -30,16 +31,21 @@ public class EnemyType2behaviour : MonoBehaviour
         player = GameObject.Find("Main_Player");
         playerPos = player.GetComponent<Transform>();
 
-        playerHealth = GetComponent<Player>().health;
+
+        damagePlayer = Resources.Load<AudioClip>("folder/CantinaBand3");
+
+        Debug.Log("Failed to load audio clip!");
 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        //playerHealth = GetComponent<Player>().health; add health to player
+
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        
 
 
 
@@ -80,6 +86,7 @@ public class EnemyType2behaviour : MonoBehaviour
     public void Attack(){
         if(timer >= attackTime){
             Debug.Log("attackSuccessful");
+            SoundManager.instance.playSound(damagePlayer, transform, 1f);
             playerHealth -= damage; //make this shit
             timer = 0;
         }
