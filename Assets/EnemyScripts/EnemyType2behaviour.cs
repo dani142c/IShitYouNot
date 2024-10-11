@@ -10,7 +10,7 @@ public class EnemyType2behaviour : MonoBehaviour
     public GameObject player;
     public Transform playerPos;
 
-    public float playerHealth;
+    public Player playerScript;
 
     public Animator animator;
 
@@ -21,7 +21,7 @@ public class EnemyType2behaviour : MonoBehaviour
 
     public Rigidbody2D rb;
     public float speed = 1;
-    public float damage = 10;
+    public float damage = 10f;
 
         // Vores ondeath event (handler)
     public delegate void DeathHandler();
@@ -31,14 +31,11 @@ public class EnemyType2behaviour : MonoBehaviour
         player = GameObject.Find("Main_Player");
         playerPos = player.GetComponent<Transform>();
 
-
         damagePlayer = Resources.LoadAll<AudioClip>("sfx/PlayerSFX/PlayerHurtSFX");
 
         Debug.Log("Failed to load audio clip!");
 
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        //playerHealth = GetComponent<Player>().health; add health to player
 
 
     }
@@ -87,7 +84,7 @@ public class EnemyType2behaviour : MonoBehaviour
         if(timer >= attackTime){
             Debug.Log("attackSuccessful");
             SoundManager.instance.playRANDSound(damagePlayer, transform, 1f);
-            playerHealth -= damage; //make this shit
+            Player.instance.PlayerTakeDamage(damage);
             timer = 0;
         }
     }

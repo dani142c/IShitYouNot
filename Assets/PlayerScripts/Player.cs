@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public static Player instance;
     public Gun equippedGun;
 
+    public AudioClip playerDeath;
+
     // Upgrades - De er multipliers
     public int points = 5;
     public float speed = 1f;
@@ -44,5 +46,18 @@ public class Player : MonoBehaviour
     public void PlayerUpgradeHealth(float multiplier)
     {
         this.health += multiplier;
+    }
+
+    public void PlayerTakeDamage(float dmg){
+        health -= dmg;
+
+        if(health <= 0){
+            PlayerDeath();
+        }
+    }
+
+    public void PlayerDeath(){
+        SoundManager.instance.playSound(playerDeath, this.transform, 1f);
+        //end game and add sfx
     }
 }
